@@ -41,6 +41,7 @@ fi
 
 
 
+
 head_(){
 	echo -e "$Clgreen Tick Tack Toe | V$Version $Clnocl"
 	echo -e "$Clred [CTRL + c] Exit Game$Clnocl \n "
@@ -56,6 +57,8 @@ playing_area_(){
 	echo -e "\n	$ClWhite $x1 | $x2 | $x3 \n	-----------\n	 $x4 | $x5 | $x6 \n	-----------\n	 $x7 | $x8 | $x9 "
 }
 player_turn_(){
+	# check who wins
+	who_wins_
 	clear
 	head_
 	playing_area_
@@ -69,48 +72,57 @@ player_turn_(){
 	if [[ $gameinput1 == 1 ]]; then
 		if [[ $x1 == $player1 ]] || [[ $x1 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x1="$player1"
 		fi
-		readonly x1="$player1"
 	elif [[ $gameinput1 == 2 ]]; then
 		if [[ $x2 == $player1 ]] || [[ $x2 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x2="$player1"
 		fi
-		readonly x2="$player1"
 	elif [[ $gameinput1 == 3 ]]; then
 		if [[ $x3 == $player1 ]] || [[ $x3 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x3="$player1"
 		fi
-		readonly x3="$player1"
 	elif [[ $gameinput1 == 4 ]]; then
 		if [[ $x4 == $player1 ]] || [[ $x4 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x4="$player1"
 		fi
-		readonly x4="$player1"
 	elif [[ $gameinput1 == 5 ]]; then
 		if [[ $x5 == $player1 ]] || [[ $x5 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x5="$player1"
 		fi
-		readonly x5="$player1"
 	elif [[ $gameinput1 == 6 ]]; then
 		if [[ $x6 == $player1 ]] || [[ $x6 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x6="$player1"
 		fi
-		readonly x6="$player1"
 	elif [[ $gameinput1 == 7 ]]; then
 		if [[ $x7 == $player1 ]] || [[ $x7 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x7="$player1"
 		fi
-		readonly x7="$player1"
 	elif [[ $gameinput1 == 8 ]]; then
 		if [[ $x8 == $player1 ]] || [[ $x8 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x8="$player1"
 		fi
-		readonly x8="$player1"
 	elif [[ $gameinput1 == 9 ]]; then
 		if [[ $x9 == $player1 ]] || [[ $x9 == $player2 ]]; then
 			player_turn_
+		else
+			readonly x9="$player1"
 		fi
-		readonly x9="$player1"
 	elif [[ $gameinput1 == [a-z] || $gameinput1 == [A-Z] ]]; then
 		clear
 		head_ && playing_area_
@@ -127,190 +139,186 @@ who_wins_(){
 	if [[ $playing_mode == 1 ]]; then
 		# if player is assigned with x then it's gonna be his/her victory
 		if [[ $player1 == X ]]; then
-			result1="You win!\n"
+			result1="$ClWhite \n\nYou win!\n"
 		elif [[ $player2 == X ]]; then
-			result1="Better luck next time!\n"
+			result1="$ClWhite \n\nBetter luck next time!\n"
 		fi
 		# if player is assigned with o then it's gonna be his/her victory
 		if [[ $player1 == O ]]; then
-			result2="You win!\n"
+			result2="$ClWhite \n\n\You win!\n"
 		elif [[ $player2 == O ]]; then
-			result2="Better luck next time!\n"
+			result2="$ClWhite \n\nBetter luck next time!\n"
 		fi
 	elif [[ $playing_mode == 2 ]]; then
 		# if player1 is assigned with x then resut1 is going to print and if player2 is assigned with o then result2 is going to print 
 		if [[ $player1 == X ]] && [[ $player2 == O ]]; then
-			result1="player1 wins!\n"
-			result2="player2 wins!\n"
+			result1="$Clpurple \n\nplayer1 wins!\n"
+			result2="$Cllblue \n\nplayer2 wins!\n"
 		# Vice-versia above
 		elif [[ $player2 == X ]] && [[ $player1 == O ]]; then
-			result1="player2 wins!\n"
-			result2="player1 wins!\n"
+			result1="$Cllblue \n\nplayer2 wins!\n"
+			result2="$Clpurple \n\nplayer1 wins!\n"
 		fi
 		
 	fi
 	if [[ $x1 == X ]] && [[ $x2 == X ]] && [[ $x3 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x1 == X ]] && [[ $x4 == X ]] && [[ $x7 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x1 == X ]] && [[ $x5 == X ]] && [[ $x9 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x5 == X ]] && [[ $x2 == X ]] && [[ $x8 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x6 == X ]] && [[ $x9 == X ]] && [[ $x3 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x7 == X ]] && [[ $x5 == X ]] && [[ $x3 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x4 == X ]] && [[ $x5 == X ]] && [[ $x6 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 	elif [[ $x7 == X ]] && [[ $x8 == X ]] && [[ $x9 == X ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result1
 		pause_
 		$0 && exit
 
 	elif [[ $x1 == O ]] && [[ $x2 == O ]] && [[ $x3 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x1 == O ]] && [[ $x4 == O ]] && [[ $x7 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x1 == O ]] && [[ $x5 == O ]] && [[ $x9 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x5 == O ]] && [[ $x2 == O ]] && [[ $x8 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x6 == O ]] && [[ $x9 == O ]] && [[ $x3 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x7 == O ]] && [[ $x5 == O ]] && [[ $x3 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x7 == O ]] && [[ $x8 == O ]] && [[ $x9 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	elif [[ $x4 == O ]] && [[ $x5 == O ]] && [[ $x6 == O ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e $result2
 		pause_
 		$0 && exit
 	# if variable are not equal to there default values then game draw
 	elif [[ $x1 != "$Clblack \b1$ClWhite" ]] && [[ $x2 != "$Clblack \b2$ClWhite" ]] && [[ $x3 != "$Clblack \b3$ClWhite" ]] && [[ $x4 != "$Clblack \b4$ClWhite" ]] && [[ $x5 != "$Clblack \b5$ClWhite" ]] && [[ $x6 != "$Clblack \b6$ClWhite" ]] && [[ $x7 != "$Clblack \b7$ClWhite" ]] && [[ $x8 != "$Clblack \b8$ClWhite" ]] && [[ $x9 != "$Clblack \b9$ClWhite" ]]; then
-		sleep 0.6 && clear
-		head_
+		sleep 0.6
 		echo -e "Match draw!\n"
 		pause_
 		$0 && exit
 	fi
 }
 bot_turn_(){
+	# check who wins
+	who_wins_
 	clear
 	head_
 	playing_area_
-	echo -en "\n\nthinking..." && sleep 0.4
+	echo -en "\n\nthinking..." && sleep 0.2
 	randomnum=$((RANDOM % 10))
 	if [[ $randomnum == 0 ]]; then
 		bot_turn_
 	elif [[ $randomnum == 1 ]]; then
 		if [[ $x1 == $player1 ]] || [[ $x1 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x1=$player2
 		fi
-		readonly x1=$player2
 	elif [[ $randomnum == 2 ]]; then
 		if [[ $x2 == $player1 ]] || [[ $x2 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x2=$player2
 		fi
-		readonly x2=$player2
 	elif [[ $randomnum == 3 ]]; then
 		if [[ $x3 == $player1 ]] || [[ $x3 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x3=$player2
 		fi
-		readonly x3=$player2
 	elif [[ $randomnum == 4 ]]; then
 		if [[ $x4 == $player1 ]] || [[ $x4 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x4=$player2
 		fi
-		readonly x4=$player2
 	elif [[ $randomnum == 5 ]]; then
 		if [[ $x5 == $player1 ]] || [[ $x5 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x5=$player2
 		fi
-		readonly x5=$player2
 	elif [[ $randomnum == 6 ]]; then
 		if [[ $x6 == $player1 ]] || [[ $x6 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x6=$player2
 		fi
-		readonly x6=$player2
 	elif [[ $randomnum == 7 ]]; then
 		if [[ $x7 == $player1 ]] || [[ $x7 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x7=$player2
 		fi
-		readonly x7=$player2
 	elif [[ $randomnum == 8 ]]; then
 		if [[ $x8 == $player1 ]] || [[ $x8 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x8=$player2
 		fi
-		readonly x8=$player2
 	elif [[ $randomnum == 9 ]]; then
 		if [[ $x9 == $player1 ]] || [[ $x9 == $player2 ]]; then
 			bot_turn_
+		else
+			readonly x9=$player2
 		fi
-		readonly x9=$player2
 	fi
 }
 player2_turn_(){
+	# check who wins
+	who_wins_
 	clear
 	head_
 	playing_area_
@@ -392,46 +400,63 @@ if [[ $input1 == 1 ]]; then
 	playing_mode=1
 	playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	if [[ $randomnum == 0 ]] || [[ $randomnum == 1 ]] || [[ $randomnum == 2 ]] || [[ $randomnum == 3 ]] || [[ $randomnum == 4 ]]; then
+		random_player1=player_turn_
+		random_player3=bot_turn_
+	else
+		random_player1=bot_turn_
+		random_player3=player_turn_
+	fi
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
+
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
+
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
+
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
 	
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && bot_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player3 && playing_area_
 
 elif [[ $input1 == 2 ]]; then
 	#playing page
 	playing_mode=2
 	playing_area_
+	if [[ $randomnum == 0 ]] || [[ $randomnum == 1 ]] || [[ $randomnum == 2 ]] || [[ $randomnum == 3 ]] || [[ $randomnum == 4 ]]; then
+		random_player1=player_turn_
+		random_player2=player2_turn_
+	else
+		random_player1=player2_turn_
+		random_player2=player_turn_
+	fi
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 	
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 
-	player_turn_ && playing_area_ && who_wins_ && player2_turn_ && playing_area_ && who_wins_
+	$random_player1 && playing_area_ && $random_player2 && playing_area_
 else
 	clear
 	head_

@@ -24,16 +24,16 @@ draw_screen_(){
 }
 
 who_wins_(){
-	if [[ $playing_mode == 1 ]]; then
-		ResultX="You win!"
-		ResultO="Better luck next time!"
-	elif [[ $playing_mode == 2 ]]; then
-		[[ "$Player1" == "X" ]] && ResultX="Player1 Wins!"; ResultO="Player2 Wins!"
-		[[ "$Player1" == "O" ]] && ResultX="Player2 Wins!"; ResultO="Player1 Wins!"
+	if [[ $PlayingMode == 1 ]]; then
+		[[ "$Player1" == "X" ]] && ResultX="You win!" && ResultO="Better luck next time!"
+		[[ "$Player1" == "O" ]] && ResultO="You win!" && ResultX="Better luck next time!"
+	elif [[ $PlayingMode == 2 ]]; then
+		[[ "$Player1" == "X" ]] && ResultX="Player1 Wins!" && ResultO="Player2 Wins!"
+		[[ "$Player1" == "O" ]] && ResultX="Player2 Wins!" && ResultO="Player1 Wins!"
 	fi
 
 	# Rules to win
-	if [[ "${xy[0]}${xy[1]}" == "${xy[1]}${xy[2]}" || "${xy[0]}${xy[3]}" == "${xy[3]}${xy[6]}" ]]; then
+	if [[ "${xy[1]}${xy[0]}" == "${xy[0]}${xy[2]}" || "${xy[3]}${xy[0]}" == "${xy[0]}${xy[6]}" ]]; then
 		clear; sleep 0.4
 		result="Result${xy[1]}";
 	       	echo -e "${!result}"; pause_; main_ "@"
@@ -41,7 +41,7 @@ who_wins_(){
 		clear; sleep 0.4
 		result="Result${xy[4]}"
 		echo -e "${!result}"; pause_; main_ "@"
-	elif [[ "${xy[6]}${xy[7]}" == "${xy[7]}${xy[8]}" || "${xy[2]}${xy[5]}" == "${xy[5]}${xy[8]}" ]]; then
+	elif [[ "${xy[6]}${xy[8]}" == "${xy[8]}${xy[7]}" || "${xy[2]}${xy[8]}" == "${xy[8]}${xy[5]}" ]]; then
 		clear; sleep 0.4
 		result="Result${xy[8]}"
 		echo -e "${!result}"; pause_; main_ "@"
@@ -69,9 +69,9 @@ bot_turn_(){
 
 player_turn_(){
 	# change title according to playing mode
-	if [[ $playing_mode == 1 ]]; then
+	if [[ $PlayingMode == 1 ]]; then
 		echo -ne "$Blue\n\nYour turn ($Player1)>>$Noc"
-	elif [[ $playing_mode == 2 ]]; then
+	elif [[ $PlayingMode == 2 ]]; then
 		echo -ne "$Purple\n\nPlayer1 turn ($Player1)>>$Noc"
 	fi
 
@@ -94,19 +94,20 @@ player2_turn_(){
 
 main_(){
 	clear
-	xy=(1 2 3 4 5 6 7 8 9)	# Position
+	xy=(0 1 2 3 4 5 6 7 8)	# Position
 
-	# Assign X and O
-	[[ $((RANDOM%2)) -eq 0 ]] && Player1='X' || Player2='O'
+	# Assign name to Player1
+	[[ $((RANDOM%2)) -eq 0 ]] && Player1='X' || Player1='O'
 	[[ "$1" == "-"[xX]* ]] && Player1='X'
 	[[ "$1" == "-"[oO]* ]] && Player1='O'
+	# Assign name to Player2
 	[[ "$Player1" == "X" ]] && Player2='O' || Player2='X'
 
 	echo -en "${Yellow}\n 1. Play with Bot\n 2. Play multiplayer\n 0. Exit\n${Noc}\n${Blue}> $White"
-	read Input1
+	read -n1 Input1
 	case "$Input1" in
 		"1")
-			playing_mode=1; draw_screen_
+			PlayingMode=1; draw_screen_
 
 			# choose random turn
 			if [[ $((RANDOM%2)) -eq 0 ]]; then
@@ -120,7 +121,7 @@ main_(){
 			fi
 		;;
 		"2")
-			playing_mode=2; draw_screen_
+			PlayingMode=2; draw_screen_
 
 			# choose random turn
 			if [[ $((RANDOM%2)) -eq 0 ]]; then
@@ -134,7 +135,7 @@ main_(){
 			fi
 		;;
 		"0")
-			clear; echo "Exited"; exit
+			clear; exit
 		;;
        		*  )
 			clear; echo -e "\n$Red ¯\_(oo)_/¯$Noc\n"; pause_; main_ "@"
